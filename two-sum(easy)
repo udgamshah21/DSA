@@ -1,0 +1,77 @@
+#include<iostream>
+#include<vector>
+#include<bits/stdc++.h>
+using namespace std;
+//class Solution {
+//public:
+    int bs(vector<int>& nums, int l, int r, int x){
+        if(r>=l){
+        int mid= l + (r-l)/2;
+
+        if(nums[mid]==x){
+            return mid;
+        }
+        else if(nums[mid]>x){
+            return bs(nums, l, mid-1, x);
+        }
+        else{
+            return bs(nums, mid+1, r, x);
+        }
+    }
+        else{
+            return -1;
+        }
+}
+    vector<int> twoSum(vector<int>& nums, int target) {
+    	vector<int> temp=nums;
+        sort(temp.begin(), temp.end());
+        vector<int>::iterator a;
+//        a= upper_bound(temp.begin(), temp.end(), target);
+//        int final_index= a-temp.begin();
+        int i, high;
+        for(i=0;i<temp.size();i++){
+            int low=temp[i];
+            int index_hi=bs(temp, i+1, temp.size()-1, target-low);
+            if(index_hi!=-1){
+            	high=index_hi;
+                break;
+            }
+        }
+//		cout<<i<<" "<<high<<"\n";
+		vector<int>::iterator start, end;
+		if(temp[i]==temp[high]){
+			start= find(nums.begin(), nums.end(), temp[i]);
+			nums[start-nums.begin()]=-1;
+			end= find(nums.begin(), nums.end(), temp[high]);
+		}
+		else{
+		start= find(nums.begin(), nums.end(), temp[i]);
+		end=   find(nums.begin(), nums.end(), temp[high]);
+	}
+	  if(start<end)
+		return {start-nums.begin(), end-nums.begin()};
+	  else
+	  return{end-nums.begin(), start-nums.begin()};
+
+
+    }
+//};
+int main(){
+    vector<int> a;
+	int n;
+	cin>>n;
+	for(int i=0;i<n;i++){
+		int temp;
+		cin>>temp;
+		a.push_back(temp);
+	}
+	int target;
+	cin>>target;
+	vector<int> ans=twoSum(a, target);
+	cout<<ans[0]<<" "<<ans[1];
+ 
+}
+
+
+
+
